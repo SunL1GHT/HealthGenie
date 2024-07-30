@@ -1,0 +1,6 @@
+temp/
+.vscode/
+.idea/
+logs/
+train/
+datasets/

@@ -19,3 +19,11 @@
 **项目目的**：
 
 我们致力于让健康管理变得更加个性化、便捷和高效。HealthGenie 旨在成为您最信赖的健康顾问，让高质量的健康监护触手可及。
+
+## 项目架构
+
+/share/new_models/Shanghai_AI_Laboratory/internlm2_5-7b-chat
+
+基于InterLM2.5底座，采用Xtuner微调，并结合Live2D、mem0和VITS完成应用落地。以下是技术架构总览：
+
+
