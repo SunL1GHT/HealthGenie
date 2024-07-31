@@ -214,10 +214,10 @@ visualizer = None
 log_level = 'INFO'
 
 # load from which checkpoint
-load_from = None
+load_from = "/root/HealthGenie/train/iter_8000.pth"
 
 # whether to resume training from the loaded checkpoint
-resume = False
+resume = True
 
 # Defaults to use random seed and disable `deterministic`
 randomness = dict(seed=None, deterministic=False)
