@@ -24,5 +24,5 @@
 
 基于InterLM2.5底座，采用Xtuner微调，并结合Live2D、mem0和VITS完成应用落地。以下是技术架构总览：
 
-[项目架构图](./asserts/pipeline.png)
+![项目架构图](./asserts/pipeline.png)
 
