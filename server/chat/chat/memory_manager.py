@@ -4,6 +4,7 @@ import time
 
 import queue
 from threading import Thread
+import os
 
 import utils
 from loguru import logger
@@ -12,7 +13,8 @@ from tool import Tool
 from vector_database import VectorDatabase
 
 # 配置信息
-settings = utils.load_json_from_file('../conf/settings.json')
+settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/settings.json')
+settings = utils.load_json_from_file(settings_path)
 
 
 # 待施工：生成印象值的方法需要实现，根据语义中的时间相关表述查找记忆（待定，暂时无需实现）,或许要加一个最大印象值和最小印象值防止出现印象值过大或过小的问题

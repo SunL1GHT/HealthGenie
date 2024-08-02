@@ -6,13 +6,14 @@ import threading
 from threading import Thread
 
 import utils
-from bio_robot.conversational_manager import ConversationalManager
-from bio_robot.unity_alive import UnityAlive
+from chat.conversational_manager import ConversationalManager
+from chat.unity_alive import UnityAlive
 from flask import Flask
 from loguru import logger
 
 # 配置信息
-settings = utils.load_json_from_file('../conf/settings.json')
+settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/settings.json')
+settings = utils.load_json_from_file(settings_path)
 
 app = Flask(__name__)
 

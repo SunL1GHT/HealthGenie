@@ -5,14 +5,15 @@ from threading import Thread
 import time
 
 import pyaudio
-from bio_robot.unity_controller import UnityController
+from chat.unity_controller import UnityController
 from loguru import logger
 from voice_create import VoiceCreate
 
 import utils
 
 # 配置信息
-settings = utils.load_json_from_file('../conf/settings.json')
+settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/settings.json')
+settings = utils.load_json_from_file(settings_path)
 
 
 class VoiceOut(Thread):

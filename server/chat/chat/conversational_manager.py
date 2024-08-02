@@ -1,5 +1,6 @@
 # coding=utf-8
 import time
+import os
 
 from threading import Thread
 
@@ -12,7 +13,8 @@ from memory_manager import MemoryManager
 from question_packaging_and_answer import QuestionPackagingAndAnswer
 
 # 配置信息
-settings = utils.load_json_from_file('../conf/settings.json')
+settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/settings.json')
+settings = utils.load_json_from_file(settings_path)
 
 
 # 起话头 超额对话收集存储 用户说话过程中要不断重置时间 用户单次说话过长触发提醒事件

@@ -25,9 +25,14 @@ from voice_in import VoiceIn
 from voice_out import VoiceOut
 from unity_alive import UnityAlive
 
-# 配置信息
-settings = utils.load_json_from_file('../conf/settings.json')
+project_path = os.path.dirname(os.path.dirname(__file__))
 
+# 配置信息
+settings_path = os.path.join(project_path, 'conf/settings.json')
+settings = utils.load_json_from_file(settings_path)
+
+# 日志路径
+log_path = os.path.join(project_path, 'logs')
 
 class LogMode(Enum):
     """
@@ -48,7 +53,7 @@ def log_mode(mode: LogMode):
         return
     elif mode == LogMode.FILE:
         logger.remove(0)
-        logger.add('../logs/runtime_{time}.log', rotation="50 MB", retention='10 days')
+        logger.add(log_path + 'runtime_{time}.log', rotation="50 MB", retention='10 days')
 
 
 def vits_alive():
@@ -80,49 +85,49 @@ def vits_alive():
 
 if __name__ == '__main__':
 
-    if settings['universal_set']['openai_api_proxy']:
-        os.environ["OPENAI_API_BASE"] = settings['universal_set']['openai_api_proxy_url']
-        openai.api_base = settings['universal_set']['openai_api_proxy_url']
-    elif settings['universal_set']['proxy_port'] != '':
-        os.environ["http_proxy"] = f"http://127.0.0.1:{settings['universal_set']['proxy_port']}"
-        os.environ["https_proxy"] = f"http://127.0.0.1:{settings['universal_set']['proxy_port']}"
+    # if settings['universal_set']['openai_api_proxy']:
+    #     os.environ["OPENAI_API_BASE"] = settings['universal_set']['openai_api_proxy_url']
+    #     openai.api_base = settings['universal_set']['openai_api_proxy_url']
+    # elif settings['universal_set']['proxy_port'] != '':
+    #     os.environ["http_proxy"] = f"http://127.0.0.1:{settings['universal_set']['proxy_port']}"
+    #     os.environ["https_proxy"] = f"http://127.0.0.1:{settings['universal_set']['proxy_port']}"
 
     log_mode(LogMode.FILE)
 
     vits_alive()
 
-    # VectorDatabase.self_inspection()
+    VectorDatabase.self_inspection()
 
-    # memory_manager = MemoryManager()
-    # memory_manager.start()
+    memory_manager = MemoryManager()
+    memory_manager.start()
 
-    # emotion_analysis = EmotionAnalysis()
+    emotion_analysis = EmotionAnalysis()
 
-    # unity_controller = UnityController(emotion_analysis)
+    unity_controller = UnityController(emotion_analysis)
 
-    # voice_create = VoiceCreate(unity_controller)
-    # voice_create.start()
+    voice_create = VoiceCreate(unity_controller)
+    voice_create.start()
 
-    # question_answer = QuestionPackagingAndAnswer(memory_manager, emotion_analysis, voice_create)
-    # conversational_manager = ConversationalManager(question_answer, memory_manager, emotion_analysis, unity_controller)
-    # conversational_manager.start()
+    question_answer = QuestionPackagingAndAnswer(memory_manager, emotion_analysis, voice_create)
+    conversational_manager = ConversationalManager(question_answer, memory_manager, emotion_analysis, unity_controller)
+    conversational_manager.start()
 
-    # voice_in = VoiceIn(unity_controller)
-    # voice_in.record_control()
+    voice_in = VoiceIn(unity_controller)
+    voice_in.record_control()
 
-    # voice_out = VoiceOut(voice_create, unity_controller)
-    # voice_out.start()
+    voice_out = VoiceOut(voice_create, unity_controller)
+    voice_out.start()
 
-    # unity_alive = UnityAlive(conversational_manager)
-    # unity_alive.start()
+    unity_alive = UnityAlive(conversational_manager)
+    unity_alive.start()
 
-    # unity_flask = UnityFlaskRun(conversational_manager, unity_alive)
-    # unity_flask.start()
+    unity_flask = UnityFlaskRun(conversational_manager, unity_alive)
+    unity_flask.start()
 
-    # while True:
-    #     user_input = voice_in.input()
-    #     memory_manager.is_speaking = True
-    #     answer = question_answer.get_conversation_answer(user_input)
-    #     voice_out.wait()
-    #     unity_controller.send_any_message('', EmotionEnum.IDLE.value)
-    #     memory_manager.is_speaking = False
+    while True:
+        user_input = voice_in.input()
+        memory_manager.is_speaking = True
+        answer = question_answer.get_conversation_answer(user_input)
+        voice_out.wait()
+        unity_controller.send_any_message('', EmotionEnum.IDLE.value)
+        memory_manager.is_speaking = False

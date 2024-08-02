@@ -9,7 +9,8 @@ import utils
 from chat.conversational_manager import ConversationalManager
 
 # 配置信息
-settings = utils.load_json_from_file('../conf/settings.json')
+settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/settings.json')
+settings = utils.load_json_from_file(settings_path)
 
 
 class UnityAlive(Thread):

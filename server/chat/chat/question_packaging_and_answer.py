@@ -1,5 +1,5 @@
 # coding=utf-8
-
+import os
 import queue
 
 import utils
@@ -12,7 +12,8 @@ from solve_problem import GptRobot
 from tool import Tool
 
 # 配置信息
-settings = utils.load_json_from_file('../conf/settings.json')
+settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/settings.json')
+settings = utils.load_json_from_file(settings_path)
 
 
 # 随机指导性话语，比如“回答这句话时开个玩笑”（待定）

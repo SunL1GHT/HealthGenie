@@ -1,4 +1,4 @@
-# HealthGenie
+# HealthGenie：健康小精灵
 
  ⭐如果你想开始入门大模型，可以参加浦语的[大模型实战营](https://github.com/InternLM/Tutorial)。
 

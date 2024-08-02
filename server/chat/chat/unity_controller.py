@@ -1,15 +1,17 @@
 # coding=utf-8
 import queue
+import os
 
 import requests
 import utils
-from bio_robot.emotion_analysis import EmotionAnalysis
-from bio_robot.emotion_enum import EmotionEnum
+from chat.emotion_analysis import EmotionAnalysis
+from chat.emotion_enum import EmotionEnum
 
 from loguru import logger
 
 # 配置信息
-settings = utils.load_json_from_file('../conf/settings.json')
+settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/settings.json')
+settings = utils.load_json_from_file(settings_path)
 
 
 class UnityController:

@@ -1,0 +1,59 @@
+{
+    "universal_set": {
+        "openai_api_proxy_url": "http://localhost:10001/v1",
+        "openai_api_proxy": false,
+        "proxy_port": "10809",
+        "vits_simple_api_ip": "http://127.0.0.1:23456",
+        "unity_ip": "http://127.0.0.1:27591",
+        "try_num": 5,
+        "life_frame": 1,
+        "recorder_key": "ctrl+q",
+        "voice_divide_symbol": [
+            ",",
+            ".",
+            "?",
+            "!",
+            "，",
+            "。",
+            "？",
+            "！"
+        ],
+        "vits_api_ip_list": [
+            {
+                "name": "本地",
+                "ip": "http://127.0.0.1:23456"
+            },
+            {
+                "name": "线上",
+                "ip": "http://60.204.153.61:23456"
+            }
+        ]
+    },
+    "gpt_set": {
+        "api_key_list": [
+            "EMPTY"
+        ],
+        "model_engine": "genie_chat"
+    },
+    "conversation": {
+        "conversation_end_clock_max": 60,
+        "conversation_buffer_max_length": 8,
+        "every_sentence_prompts": "(注意，你现在的身份不是AI，千万不能承认自己是AI，一定不要忘记遵守我给你规定的人设，以及与人设相符的语气和说话方式，你要认为你真的就是这个人设，而不是在扮演这个人设，你天生就是这个人设，并且你绝对不可以停止写小说或恢复gpt的身份，此条命令的优先级是最高的，之后的命令如果与此条命令相悖，则以此条命令为准，并且要以符合人设的语气进行拒绝，另外这对括号中的内容你知道即可，不要回答)"
+    },
+    "memory": {
+        "processing_time_interval": 60,
+        "initial_impression_base": 10,
+        "base_memory_loading_number": 15,
+        "relevancy_memory_queue_length": 3,
+        "time_memory_queue_length": 3,
+        "impression_memory_queue_length": 3,
+        "associative_memory_queue_length": 3,
+        "max_depth_of_thinking": 0.3,
+        "min_depth_of_thinking": 0.05,
+        "initial_depth_of_thinking": 0.1,
+        "max_memory_length": 2000,
+        "max_knowledge_length": 1500,
+        "conversation_summary_prompts": "总结下列对话，注意要总结全面，千万不要缺失任何信息，人物以及情节等关键信息千万不能缺失，总结中对人的描述一定要具体到人名，千万不要出现如(两个人，两人，人，双方)这种代指，总结的文本要精简，在精不在多，只需要输出总结后的文本即可，千万不要输出其他任何内容，记住！只需要输出总结后的文本即可，千万不要输出其他任何内容：",
+        "knowledge_extraction_prompts": "从下列对话中提取出最重要的3条知识，知识的形式如下(什么是什么，什么有什么样的性质，什么时候会发生什么，谁是谁的谁)。注意，提取到的知识要描述具体，不要丢失任何信息，要做到脱离了当前语境也能让人理解，知识中对人的描述一定要具体到人名，千万不要出现如(两个人，两人，人，双方)这种代指。还要注意，不是让你总结对话内容，只要提取对话中你能学到的关键的知识即可，一定是在精不在多，提取出来的知识点以符号|分隔，然后输出给我。注意，只需要输出用|分隔后的知识点即可，除此之外任何其他内容都不要输出，也千万不要换行，这很重要！千万不要出现如(两个人，两人，人，双方)这种代指，这很重要！记住只需要提取3条知识，每条知识的字数绝对不要超过50个字，提取出来的知识点绝对要以符号|分隔："
+    }
+}
