@@ -1,0 +1,29 @@
+{
+    "self_updating_index": 0,
+    "historical_memory": {
+        "0": {
+            "log_time": 0,
+            "initial_impression": 1.5659509139465189,
+            "current_impression": 1.5659509139465189,
+            "number_of_repetitions": 0,
+            "text": "，",
+            "knowledge_list": [],
+            "associated_nodes_and_distance_between_nodes": {}
+        },
+        "1": {
+            "log_time": 1692627047.248155,
+            "initial_impression": 110,
+            "current_impression": 110,
+            "number_of_repetitions": 1,
+            "text": "东篱和台南派蒙进行了一次对话。东篱首先打招呼，并确认了对方是台南派蒙。他询问是否有任何需要帮助的事情。",
+            "knowledge_list": [
+                "东篱是台南的一个人",
+                "东篱需要帮助",
+                "派蒙是东篱的朋友"
+            ],
+            "associated_nodes_and_distance_between_nodes": {
+                "0": 0.6580344438552856
+            }
+        }
+    }
+}

@@ -1,0 +1,12 @@
+loguru==0.7.0
+openai==1.17.0
+requests==2.32.2
+chromadb==0.4.24
+langchain==0.1.16
+keyboard~=0.13.5
+PyAudio~=0.2.13
+tiktoken==0.4.0
+flask==3.0.2
+flask_cors==4.0.0
+gradio==3.41.2
+pydantic==2.7.0

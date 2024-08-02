@@ -1,0 +1,77 @@
+{
+  "application_list": [
+    {
+      "name": "send_email_to_user",
+      "description": "给用户发送邮件，注意，只有明确搞清楚了用户想要收到的邮件的主题和内容才能使用此方法，否则绝不可以执行此方法！必须问清楚邮件的主题和内容后才能使用此方法！另外只有用户让你给他发邮件的时候才能使用此方法！如果你收到的返回值是未能找到该用户的邮箱，那么你接下来应该向用户询问其邮箱是多少！",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "subject": {
+            "type": "string",
+            "description": "邮件的主题"
+          },
+          "text": {
+            "type": "string",
+            "description": "邮件的内容"
+          }
+        },
+        "required": ["subject","text"]
+      }
+    },
+    {
+      "name": "send_email_to_other_people",
+      "description": "给别人发送邮件，如果用户不是想让你给他自己发邮件，而是想让你给别人发邮件，则执行此方法",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "email_number": {
+            "type": "string",
+            "description": "收件人邮箱号"
+          },
+          "subject": {
+            "type": "string",
+            "description": "邮件的主题"
+          },
+          "text": {
+            "type": "string",
+            "description": "邮件的内容"
+          }
+        },
+        "required": ["email_number","subject","text"]
+      }
+    },
+    {
+      "name": "add_new_user_email",
+      "description": "添加新的用户邮箱，当你不知道用户的邮箱号，向用户询问，用户将邮箱告知于你的时候使用这个方法",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "email_number": {
+            "type": "string",
+            "description": "邮件号"
+          }
+        },
+        "required": ["email_number"]
+      }
+    },
+    {
+      "name": "change_user_email",
+      "description": "修改用户邮箱，当用户想要修改自己的邮箱号，或者用户告诉你邮箱改了的时候，使用此方法",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "email_number": {
+            "type": "string",
+            "description": "新的邮件号"
+          }
+        },
+        "required": ["email_number"]
+      }
+    },
+    {
+      "name": "get_current_time",
+      "description": "当你想知道现在的时间时非常有用。",
+      "parameters": {}
+    }
+  ]
+}
