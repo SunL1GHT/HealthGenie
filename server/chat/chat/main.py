@@ -25,6 +25,7 @@ from voice_in import VoiceIn
 from voice_out import VoiceOut
 from unity_alive import UnityAlive
 
+# 项目根目录
 project_path = os.path.dirname(os.path.dirname(__file__))
 
 # 配置信息

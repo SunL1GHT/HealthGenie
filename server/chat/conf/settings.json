@@ -2,7 +2,7 @@
     "universal_set": {
         "openai_api_proxy_url": "http://localhost:10001/v1",
         "openai_api_proxy": false,
-        "proxy_port": "10809",
+        "proxy_port": "7890",
         "vits_simple_api_ip": "http://127.0.0.1:23456",
         "unity_ip": "http://127.0.0.1:27591",
         "try_num": 5,
@@ -29,7 +29,13 @@
             }
         ]
     },
+    "embedding_set":{
+        "type": "jinaai",
+        "api_key": "EMPTY",
+        "model_engine": "jina-embeddings-v2-base-zh"
+    },
     "gpt_set": {
+
         "api_key_list": [
             "EMPTY"
         ],

@@ -2,17 +2,23 @@
 import os
 import time
 
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.vectorstores import Chroma
+from embeddings_hand_out import EmbeddingHandOut
+from langchain_community.vectorstores import Chroma
 from loguru import logger
 
 import utils
-from api_key_hand_out import ApiKeyHandOut
+
+# 项目根目录
+project_path = os.path.dirname(os.path.dirname(__file__))
 
 # 配置信息
 settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/settings.json')
 settings = utils.load_json_from_file(settings_path)
 
+# 向量数据库路径
+vecdb_path = os.path.join(project_path, "vector_database")
+memory_vecdb_path = os.path.join(vecdb_path, "memory")
+knowledge_vecdb_path = os.path.join(vecdb_path, "knowledge")
 
 class VectorDatabase:
     """
@@ -26,7 +32,7 @@ class VectorDatabase:
         :param collection_name: 集合名称
         """
         logger.info('正在初始化向量数据库相关信息...')
-        self.embeddings = OpenAIEmbeddings(openai_api_key=ApiKeyHandOut.get_api_key())
+        self.embeddings = EmbeddingHandOut.get_embeddings()
         self.persist_directory = persist_directory
         self.collection_name = collection_name
         self.vectordb = None
@@ -41,14 +47,14 @@ class VectorDatabase:
         """
 
         logger.info(f'在({self.collection_name})集合中保存数据({text_list})...')
-        self.embeddings = OpenAIEmbeddings(openai_api_key=ApiKeyHandOut.get_api_key())
+        self.embeddings = EmbeddingHandOut.get_embeddings()
         time_log = time.time()
 
         vectordb = Chroma.from_texts(text_list, self.embeddings, persist_directory=self.persist_directory,
                                      collection_name=self.collection_name, metadatas=metadatas)
         vectordb.persist()
 
-        self.embeddings = OpenAIEmbeddings(openai_api_key=ApiKeyHandOut.get_api_key())
+        self.embeddings = EmbeddingHandOut.get_embeddings()
 
         self.vectordb = Chroma(persist_directory=self.persist_directory, embedding_function=self.embeddings,
                                collection_name=self.collection_name)
@@ -64,7 +70,7 @@ class VectorDatabase:
 
         logger.info(f'在({self.collection_name})集合中查询({query})的相关数据...')
 
-        self.embeddings = OpenAIEmbeddings(openai_api_key=ApiKeyHandOut.get_api_key())
+        self.embeddings = EmbeddingHandOut.get_embeddings()
 
         time_log = time.time()
 
@@ -83,9 +89,9 @@ class VectorDatabase:
         向量数据库自检
         :return:
         """
-        if not os.path.exists('../vector_database'):
-            vd1 = VectorDatabase('../vector_database/memory', 'memory')
-            vd2 = VectorDatabase('../vector_database/knowledge', 'knowledge')
+        if not os.path.exists(vecdb_path):
+            vd1 = VectorDatabase(memory_vecdb_path, 'memory')
+            vd2 = VectorDatabase(knowledge_vecdb_path, 'knowledge')
             vd1.save([''], [{'id_str': '0'}])
             vd2.save([''])
             robot_memory_information_init = {
@@ -103,26 +109,24 @@ class VectorDatabase:
                     }
                 }
             }
-            utils.dump_to_json(robot_memory_information_init, '../conf/robot_memory_information.json')
+            utils.dump_to_json(robot_memory_information_init, os.path.join(project_path, "conf/robot_memory_information.json"))
 
 
 if __name__ == '__main__':
     """
     用于测试本模块的代码
     """
-    os.environ["http_proxy"] = "http://127.0.0.1:10809"
-    os.environ["https_proxy"] = "http://127.0.0.1:10809"
     VectorDatabase.self_inspection()
-    # vd1 = VectorDatabase('../vector_database/memory', 'memory')
-    # vd2 = VectorDatabase('../vector_database/knowledge', 'knowledge')
+    vd1 = VectorDatabase(memory_vecdb_path, 'memory')
+    vd2 = VectorDatabase(knowledge_vecdb_path, 'knowledge')
     # vd1.save([''], [{'id_str': '0'}])
     # vd2.save([''])
-    # vd.save(['章节测试请大家观看完视频后手动打开。', '请大家仔细打开视频上方的”学前必读“，查看成绩分布。',
-    #          '每天定时半小时可获得一分习惯分', '每天都要锻炼30分钟身体', '5月14号', '5月13号', '5月12号', '5月15号',
-    #          '5月11号'],
-    #         [{'a': '1', '111': '222'}, {'b': '2'}, {'c': '3'}, {'d': '4'}, {'d': '4'}, {'d': '4'}, {'d': '4'},
-    #          {'d': '4'}, {'d': '4'}]
-    # #         )
-    # print(vd.search('试题没法自动开启', 3))
-    # print(vd.search('今天是5月13号，昨天是几号', 3))
-    # print(vd.search('最近有什么好玩的游戏吗', 8)[0][0].metadata)
+    vd2.save(['章节测试请大家观看完视频后手动打开。', '请大家仔细打开视频上方的”学前必读“，查看成绩分布。',
+             '每天定时半小时可获得一分习惯分', '每天都要锻炼30分钟身体', '5月14号', '5月13号', '5月12号', '5月15号',
+             '5月11号'],
+            [{'a': '1', '111': '222'}, {'b': '2'}, {'c': '3'}, {'d': '4'}, {'d': '4'}, {'d': '4'}, {'d': '4'},
+             {'d': '4'}, {'d': '4'}]
+            )
+    print(vd2.search('试题没法自动开启', 3))
+    # print(vd2.search('今天是5月13号，昨天是几号', 3))
+    # print(vd2.search('最近有什么好玩的游戏吗', 8)[0][0].metadata)

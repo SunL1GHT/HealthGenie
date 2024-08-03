@@ -25,7 +25,8 @@ class EmotionAnalysis:
     """
 
     def __init__(self):
-        self.robot_conventional_information = utils.load_json_from_file('../conf/robot_conventional_information.json')
+        robot_conventional_information_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/robot_conventional_information.json')
+        self.robot_conventional_information = utils.load_json_from_file(robot_conventional_information_path)
         """
         机器人常规信息
         """
