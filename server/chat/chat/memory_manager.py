@@ -19,6 +19,8 @@ project_path = os.path.dirname(os.path.dirname(__file__))
 settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/settings.json')
 settings = utils.load_json_from_file(settings_path)
 
+robot_memory_information_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/robot_memory_information.json')
+
 
 # 待施工：生成印象值的方法需要实现，根据语义中的时间相关表述查找记忆（待定，暂时无需实现）,或许要加一个最大印象值和最小印象值防止出现印象值过大或过小的问题
 
@@ -41,7 +43,7 @@ class MemoryManager(Thread):
         """
         上一生命周期帧结束时间
         """
-        self.robot_memory_information = utils.load_json_from_file(project_path + 'conf/robot_memory_information.json')
+        self.robot_memory_information = utils.load_json_from_file(robot_memory_information_path)
         """
         机器人记忆信息
         """
@@ -319,8 +321,7 @@ class MemoryManager(Thread):
                     "knowledge_list": knowledge_list,
                     "associated_nodes_and_distance_between_nodes": {}
                 }
-                utils.dump_to_json(self.robot_memory_information,
-                                   '../conf/robot_memory_information.json')  # 记忆相关数据存入json
+                utils.dump_to_json(self.robot_memory_information, robot_memory_information_path)  # 记忆相关数据存入json
             if i[1] == 0:
                 self.robot_memory_information['historical_memory'][i[0].metadata['id_str']]['initial_impression'] += (
                         1 / self.min_depth_of_thinking)
@@ -329,7 +330,7 @@ class MemoryManager(Thread):
                     1 / i[1])
             self.robot_memory_information['historical_memory'][i[0].metadata['id_str']]['current_impression'] += (
                     1 / i[1])
-        utils.dump_to_json(self.robot_memory_information, project_path + 'conf/robot_memory_information.json')
+        utils.dump_to_json(self.robot_memory_information, robot_memory_information_path)
 
     def associative_memory_loading(self, document_list: list, loading_num: int):
         """
@@ -485,7 +486,7 @@ class MemoryManager(Thread):
             "knowledge_list": knowledge_list,
             "associated_nodes_and_distance_between_nodes": {}
         }
-        utils.dump_to_json(self.robot_memory_information, project_path + 'conf/robot_memory_information.json')  # 记忆相关数据存入json
+        utils.dump_to_json(self.robot_memory_information, robot_memory_information_path)  # 记忆相关数据存入json
         self.memory_vector_database.save([short_memory], [{'id_str': memory_id}])  # 记忆本身存入向量数据库
         self.memory_network_self_organizing(memory_id)
         logger.success('本次记忆存储成功...')
@@ -556,7 +557,7 @@ class MemoryManager(Thread):
             self.robot_memory_information['historical_memory'])
         logger.info(f'本次记忆网络自更新id为{id_str}...')
         self.memory_network_self_organizing(id_str)
-        utils.dump_to_json(self.robot_memory_information, project_path + 'conf/robot_memory_information.json')
+        utils.dump_to_json(self.robot_memory_information, robot_memory_information_path)
         logger.success('本次记忆网络自更新成功...')
 
     def memory_network_self_organizing(self, id_str: str):
@@ -573,7 +574,7 @@ class MemoryManager(Thread):
                 continue
             self.robot_memory_information['historical_memory'][id_str]['associated_nodes_and_distance_between_nodes'][
                 i[0].metadata['id_str']] = i[1]
-        utils.dump_to_json(self.robot_memory_information, project_path + 'conf/robot_memory_information.json')
+        utils.dump_to_json(self.robot_memory_information, robot_memory_information_path)
         logger.success('本次记忆网络自组织成功...')
 
     def memory_forget(self):
@@ -587,7 +588,7 @@ class MemoryManager(Thread):
             initial_impression = self.robot_memory_information['historical_memory'][memory_id]['initial_impression']
             self.robot_memory_information['historical_memory'][memory_id][
                 'current_impression'] = self.memory_forget_by_ebbinghaus(initial_impression, time_interval)
-        utils.dump_to_json(self.robot_memory_information, project_path + 'conf/robot_memory_information.json')
+        utils.dump_to_json(self.robot_memory_information, robot_memory_information_path)
 
     @staticmethod
     def memory_forget_by_ebbinghaus(initial_impression: float, time_interval: float) -> float:

@@ -7,7 +7,7 @@ from loguru import logger
 
 import utils
 from api_key_hand_out import ApiKeyHandOut
-  
+
 # 配置信息
 settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/settings.json')
 settings = utils.load_json_from_file(settings_path)

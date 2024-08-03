@@ -6,14 +6,20 @@ import time
 from threading import Thread
 
 import requests
-from chat.unity_controller import UnityController
+from unity_controller import UnityController
 from loguru import logger
 
 import utils
 
+# 项目根目录
+project_path = os.path.dirname(os.path.dirname(__file__))
+
 # 配置信息
-settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/settings.json')
+settings_path = os.path.join(project_path, 'conf/settings.json')
 settings = utils.load_json_from_file(settings_path)
+
+robot_conventional_information_path = os.path.join(project_path,
+                                                   'conf/robot_conventional_information.json')
 
 voice_url = f'{settings["universal_set"]["vits_simple_api_ip"]}/voice/vits'
 proxies = {'http': settings["universal_set"]["vits_simple_api_ip"]}
@@ -42,7 +48,7 @@ class VoiceCreate(Thread):
         """
         语音输出文本队列
         """
-        self.voice_out_id = utils.load_json_from_file('../conf/robot_conventional_information.json')['voice_out_id']
+        self.voice_out_id = utils.load_json_from_file(robot_conventional_information_path)['voice_out_id']
         """
         语音输出的角色id
         """
@@ -116,7 +122,7 @@ class VoiceCreate(Thread):
                 response = requests.get(url=voice_url, params=params, proxies=proxies)
                 # 检查响应状态码
                 if response.status_code == 200:
-                    filename = f"../files/out{int(time.time() * 100)}.wav"
+                    filename = os.path.join(project_path, f"files/out{int(time.time() * 100)}.wav")
                     # 保存音频文件
                     with open(filename, "wb") as file:
                         file.write(response.content)
@@ -149,3 +155,7 @@ class VoiceCreate(Thread):
         if voice:
             self.unity_controller.add_message(text)
             self.voice_out_file_queue.put(voice)
+
+if __name__ == '__main__':
+    filename = f"files/out{int(time.time() * 100)}.wav"
+    print(os.path.join(project_path, f"files/out{int(time.time() * 100)}.wav"))

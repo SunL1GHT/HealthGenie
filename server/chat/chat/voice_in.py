@@ -10,12 +10,15 @@ import openai
 import pyaudio
 import utils
 from api_key_hand_out import ApiKeyHandOut
-from chat.emotion_enum import EmotionEnum
-from chat.unity_controller import UnityController
+from emotion_enum import EmotionEnum
+from unity_controller import UnityController
 from loguru import logger
 
+# 项目根目录
+project_path = os.path.dirname(os.path.dirname(__file__))
+
 # 配置信息
-settings_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'conf/settings.json')
+settings_path = os.path.join(project_path, 'conf/settings.json')
 settings = utils.load_json_from_file(settings_path)
 
 
@@ -85,14 +88,17 @@ class VoiceIn:
             self.unity_controller.send_any_message('思考ing...', EmotionEnum.THINK.value)
             self.can_record = False
             self.rec.stop()
-            self.rec.save('../files/input.wav')
-            audio_file = open("../files/input.wav", "rb")
+            input_path = os.path.join(project_path, f"files/input.wav")
+            self.rec.save(input_path)
+            audio_file = open(input_path, "rb")
 
             try_num = settings['universal_set']['try_num']
             while True:
                 try:
-                    openai.api_key = ApiKeyHandOut.get_api_key()
-                    transcript = openai.Audio.transcribe("whisper-1", audio_file)
+                    client = openai.Client(api_key=ApiKeyHandOut.get_api_key(), 
+                                           base_url = settings['whisper_set']['whisper_api_ip'])
+                    transcript = client.audio.transcriptions.create(model=settings['whisper_set']['model_engine'],
+                                                                    file=audio_file)
                     self.text = transcript.text
                     print(self.text)
                     break
@@ -194,11 +200,9 @@ class Recorder(Thread):
         print("Saved")
 
 
-# if __name__ == '__main__':
-#     os.environ["http_proxy"] = "http://127.0.0.1:10809"
-#     os.environ["https_proxy"] = "http://127.0.0.1:10809"
-#     v = VoiceIn()
-#     print(12312)
-#     v.record_control()
-#     while True:
-#         pass
+if __name__ == '__main__':
+    v = VoiceIn()
+    print(12312)
+    v.record_control()
+    while True:
+        pass

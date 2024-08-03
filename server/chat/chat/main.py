@@ -8,11 +8,10 @@ import time
 import os
 from enum import Enum
 
-import openai
 import requests
 import utils
-from chat.emotion_enum import EmotionEnum
-from chat.unity_controller import UnityController
+from emotion_enum import EmotionEnum
+from unity_controller import UnityController
 from conversational_manager import ConversationalManager
 from emotion_analysis import EmotionAnalysis
 from loguru import logger
@@ -85,13 +84,6 @@ def vits_alive():
 # 印象计算
 
 if __name__ == '__main__':
-
-    # if settings['universal_set']['openai_api_proxy']:
-    #     os.environ["OPENAI_API_BASE"] = settings['universal_set']['openai_api_proxy_url']
-    #     openai.api_base = settings['universal_set']['openai_api_proxy_url']
-    # elif settings['universal_set']['proxy_port'] != '':
-    #     os.environ["http_proxy"] = f"http://127.0.0.1:{settings['universal_set']['proxy_port']}"
-    #     os.environ["https_proxy"] = f"http://127.0.0.1:{settings['universal_set']['proxy_port']}"
 
     log_mode(LogMode.FILE)
 

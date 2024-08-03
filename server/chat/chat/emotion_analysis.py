@@ -10,8 +10,8 @@ import re
 from threading import Thread
 
 import utils
-from chat.emotion_enum import EmotionEnum
-from chat.solve_problem import GptRobot
+from emotion_enum import EmotionEnum
+from solve_problem import GptRobot
 from loguru import logger
 
 # 配置信息

@@ -4,8 +4,8 @@ import os
 
 import requests
 import utils
-from chat.emotion_analysis import EmotionAnalysis
-from chat.emotion_enum import EmotionEnum
+from emotion_analysis import EmotionAnalysis
+from emotion_enum import EmotionEnum
 
 from loguru import logger
 
