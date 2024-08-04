@@ -23,7 +23,7 @@ curl --location 'http://localhost:10809/v1/chat/completions' \
 """
 client = OpenAI(
     api_key="sk-xxx',",
-    base_url="http://localhost:10001/v1"
+    base_url="http://localhost:10002/v1"
 )
 model_name = client.models.list().data[0].id
 print(model_name)

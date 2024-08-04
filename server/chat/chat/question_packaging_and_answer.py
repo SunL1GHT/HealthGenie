@@ -4,7 +4,7 @@ import queue
 
 import utils
 # 这一行千万不能删掉，因为后面使用eval函数以字符串的形式调用了这个类
-from chat.applications import Applications
+from applications import Applications
 from emotion_analysis import EmotionAnalysis
 from loguru import logger
 from memory_manager import MemoryManager

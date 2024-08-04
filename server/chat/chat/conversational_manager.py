@@ -5,8 +5,8 @@ import os
 from threading import Thread
 
 import utils
-from chat.emotion_enum import EmotionEnum
-from chat.unity_controller import UnityController
+from emotion_enum import EmotionEnum
+from unity_controller import UnityController
 from emotion_analysis import EmotionAnalysis
 from loguru import logger
 from memory_manager import MemoryManager

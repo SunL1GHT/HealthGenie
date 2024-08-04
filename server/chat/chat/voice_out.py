@@ -5,7 +5,7 @@ from threading import Thread
 import time
 
 import pyaudio
-from chat.unity_controller import UnityController
+from unity_controller import UnityController
 from loguru import logger
 from voice_create import VoiceCreate
 

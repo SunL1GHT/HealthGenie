@@ -6,8 +6,8 @@ import threading
 from threading import Thread
 
 import utils
-from chat.conversational_manager import ConversationalManager
-from chat.unity_alive import UnityAlive
+from conversational_manager import ConversationalManager
+from unity_alive import UnityAlive
 from flask import Flask
 from loguru import logger
 

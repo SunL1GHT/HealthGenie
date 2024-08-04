@@ -1,7 +1,9 @@
 # coding=utf-8
 
 from loguru import logger
+import sys
 
+sys.path.insert(0, sys.path[0]+"/../")
 from applications_realize.send_email.send_email import SendEmail
 
 
