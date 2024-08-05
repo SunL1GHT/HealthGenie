@@ -9,3 +9,6 @@ final_model/
 internlm2_5-7b-chat/
 __pycache__/
 vector_database/
+*.log
+*.wav/
+chatvector_database/

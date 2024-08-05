@@ -21,7 +21,7 @@ settings = utils.load_json_from_file(settings_path)
 robot_conventional_information_path = os.path.join(project_path,
                                                    'conf/robot_conventional_information.json')
 
-voice_url = f'{settings["universal_set"]["vits_simple_api_ip"]}/voice/vits'
+voice_url = f'{settings["universal_set"]["vits_simple_api_ip"]}/vits'
 proxies = {'http': settings["universal_set"]["vits_simple_api_ip"]}
 
 
